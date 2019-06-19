@@ -124,6 +124,7 @@ func main() {
 func myParser(fl *os.File, mfile string, dict *words) mydata {
 	var md mydata
         structType := reflect.TypeOf(mydata{})
+        //_struct := reflect.ValueOf(md)
 
 	scanner := bufio.NewScanner(fl)
 	row := ""
@@ -138,6 +139,15 @@ func myParser(fl *os.File, mfile string, dict *words) mydata {
                 if strings.HasPrefix(row, structType.Field(1).Name)  { //"address"
                       md.address = strings.TrimSpace(strings.TrimPrefix(row, structType.Field(1).Name))
 		}
+		// Или общий случай с применением рефлексии
+                //for i := 0; i < _struct.NumField(); i++ {
+                //      name := structType.Field(i).Name
+                //      //fmt.Println(name, _struct.Field(i))
+                //     if strings.HasPrefix(row, name)  { //"host_name" или "address" или иное значение имени поля структуры
+                //         _struct.Field(i) = strings.TrimSpace(strings.TrimPrefix(row, name))
+	        //	}
+
+                //}
 	}
       // Запись в словарь результатов поиска значений
       dict.add( mfile, md)
